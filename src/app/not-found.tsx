@@ -127,26 +127,15 @@ export default function NotFound() {
             transition={{ duration: 0.8, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Button
-              as={Link}
-              href="/"
-              variant="primary"
-              size="lg"
-              className="group"
-            >
+            <Link href="/" className="group">
               <Icon name="fas fa-home" className="mr-2" />
               На главную
-            </Button>
+            </Link>
 
-            <Button
-              href="/portfolio"
-              variant="outline"
-              size="lg"
-              className="group"
-            >
+            <Link href="/portfolio" className="group">
               <Icon name="fas fa-folder-open" className="mr-2" />
               Проекты
-            </Button>
+            </Link>
 
             <Button
               onClick={() => window.history.back()}
