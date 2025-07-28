@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Модель для проектов портфолио
+model Project {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?
+  shortDesc    String? // Краткое описание для карточки
+  image        String? // Главное изображение проекта
+  images       String[] // Дополнительные изображения
+  url          String? // Ссылка на живой проект
+  githubUrl    String? // Ссылка на GitHub
+  technologies String[] // Массив используемых технологий
+  category     String // frontend, backend, fullstack, mobile
+  featured     Boolean  @default(false) // Рекомендуемые проекты
+  completed    Boolean  @default(true) // Завершен ли проект
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("projects")
+}
+
+// Модель для навыков и технологий
+model Skill {
+  id        String        @id @default(cuid())
+  name      String        @unique
+  category  SkillCategory
+  level     Int // 1-5 уровень владения
+  icon      String? // Путь к иконке или название иконки
+  color     String? // Цвет для отображения
+  order     Int           @default(0) // Порядок отображения
+  visible   Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@map("skills")
+}
+
+// Модель для опыта работы
+model Experience {
+  id           String    @id @default(cuid())
+  company      String
+  position     String
+  description  String?
+  startDate    DateTime
+  endDate      DateTime?
+  current      Boolean   @default(false)
+  location     String?
+  url          String? // Ссылка на сайт компании
+  technologies String[] // Технологии, используемые в работе
+  achievements String[] // Достижения
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("experience")
+}
+
+// Модель для образования
+model Education {
+  id           String    @id @default(cuid())
+  institution  String
+  degree       String
+  field        String? // Специальность
+  description  String?
+  startDate    DateTime
+  endDate      DateTime?
+  current      Boolean   @default(false)
+  gpa          Float? // Средний балл
+  achievements String[] // Достижения, награды
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("education")
+}
+
+// Модель для сообщений с контактной формы
+model Contact {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  phone     String?
+  company   String?
+  status    ContactStatus @default(NEW)
+  read      Boolean       @default(false)
+  replied   Boolean       @default(false)
+  notes     String? // Заметки для администратора
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@map("contacts")
+}
+
+// Модель для блога (если планируется)
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String?
+  content     String
+  image       String?
+  tags        String[]
+  published   Boolean   @default(false)
+  featured    Boolean   @default(false)
+  views       Int       @default(0)
+  readTime    Int? // Время чтения в минутах
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("blog_posts")
+}
+
+// Модель для отзывов/рекомендаций
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  position  String?
+  company   String?
+  content   String
+  image     String? // Аватар
+  rating    Int? // Оценка 1-5
+  linkedin  String? // Ссылка на LinkedIn
+  featured  Boolean  @default(false)
+  approved  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+// Модель для сертификатов
+model Certificate {
+  id           String    @id @default(cuid())
+  name         String
+  issuer       String // Организация, выдавшая сертификат
+  description  String?
+  image        String? // Изображение сертификата
+  url          String? // Ссылка на верификацию
+  credentialId String? // ID сертификата
+  issuedDate   DateTime
+  expiryDate   DateTime?
+  skills       String[] // Связанные навыки
+  featured     Boolean   @default(false)
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("certificates")
+}
+
+// Модель для настроек сайта
+model SiteSettings {
+  id           String   @id @default("settings")
+  siteName     String   @default("Portfolio")
+  siteDesc     String?
+  email        String?
+  phone        String?
+  location     String?
+  linkedin     String?
+  github       String?
+  twitter      String?
+  instagram    String?
+  resume       String? // Ссылка на резюме
+  about        String? // О себе
+  heroTitle    String?
+  heroSubtitle String?
+  heroImage    String?
+  maintenance  Boolean  @default(false)
+  analytics    String? // Google Analytics ID
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+// Энумы
+enum SkillCategory {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  MOBILE
+  DATABASE
+  DEVOPS
+  DESIGN
+  TOOLS
+  LANGUAGES
+  OTHER
+}
+
+enum ContactStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  SPAM
+}
