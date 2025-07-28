@@ -1,91 +1,120 @@
-﻿"use client"
+﻿"use client";
 
-import Link from 'next/link'
-import { useState } from 'react'
-import { ThemeSwitcher } from '@/features/theme-switcher/theme-switcher'
-import { cn } from '@/shared/lib/css'
-import { Menu, X } from 'lucide-react'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
-const navigation = [
-  { name: 'Главная', href: '/' },
-  { name: 'Проекты', href: '/projects' },
-  { name: 'Обо мне', href: '/about' },
-  { name: 'Блог', href: '/blog' },
-  { name: 'Контакты', href: '/contact' },
-]
+const navigationLinks = [
+  { href: "/", label: "Главная" },
+  { href: "/about", label: "О себе" },
+  { href: "/portfolio", label: "Проекты" },
+  { href: "/blog", label: "Блог" },
+];
 
 export const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div className="flex items-center gap-x-12">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="text-xl font-bold text-gray-900 dark:text-white">YourName</span>
-          </Link>
-          <div className="hidden lg:flex lg:gap-x-8">
-            {navigation.map((item) => (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-dark/95 backdrop-blur-xl border-b border-white/10"
+          : "bg-white/10 backdrop-blur-lg border-b border-white/20"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <Link
+              href="/"
+              className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent code-font"
+            >
+              &lt;AS/&gt;
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navigationLinks.map((link) => (
               <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                key={link.href}
+                href={link.href}
+                className={`nav-link text-white/80 hover:text-white transition-all duration-300 relative group ${
+                  pathname === link.href ? "text-white" : ""
+                }`}
               >
-                {item.name}
+                {link.label}
+                {pathname === link.href && (
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-accent" />
+                )}
               </Link>
             ))}
-          </div>
-        </div>
-        <div className="flex items-center">
-          <ThemeSwitcher />
-          <div className="flex lg:hidden ml-4">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-300"
-              onClick={() => setMobileMenuOpen(true)}
+            <Link
+              href="/contact"
+              className="bg-gradient-to-r from-primary to-accent px-6 py-2 rounded-full text-white font-medium hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105"
             >
-              <span className="sr-only">Открыть меню</span>
-              <Menu className="h-6 w-6" aria-hidden="true" />
+              Контакты
+            </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white/80 hover:text-white transition-colors"
+            >
+              <i className={`fas ${isOpen ? "fa-times" : "fa-bars"} text-xl`} />
             </button>
           </div>
         </div>
-      </nav>
-      
-      {/* Мобильное меню */}
-      <div className={cn(
-        "fixed inset-0 z-50 bg-white dark:bg-gray-900 lg:hidden",
-        mobileMenuOpen ? "block" : "hidden"
-      )}>
-        <div className="fixed inset-0 flex">
-          <div className="w-full">
-            <div className="flex items-center justify-between p-6">
-              <Link href="/" className="-m-1.5 p-1.5">
-                <span className="text-xl font-bold text-gray-900 dark:text-white">YourName</span>
-              </Link>
-              <button
-                type="button"
-                className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-300"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="sr-only">Закрыть меню</span>
-                <X className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="p-6 space-y-4">
-              {navigation.map((item) => (
+
+        {/* Mobile menu */}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden glass-effect border-t border-white/10"
+          >
+            <div className="px-4 pt-2 pb-3 space-y-1">
+              {navigationLinks.map((link) => (
                 <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block text-base font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                  onClick={() => setMobileMenuOpen(false)}
+                  key={link.href}
+                  href={link.href}
+                  className={`block px-3 py-2 text-white/80 hover:text-white transition-colors ${
+                    pathname === link.href ? "text-white" : ""
+                  }`}
+                  onClick={() => setIsOpen(false)}
                 >
-                  {item.name}
+                  {link.label}
                 </Link>
               ))}
+              <Link
+                href="/contact"
+                className="block px-3 py-2 text-white/80 hover:text-white transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Контакты
+              </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        )}
       </div>
-    </header>
-  )
-}
+    </motion.nav>
+  );
+};
