@@ -1,6 +1,5 @@
 import React from "react";
 import { cn } from "@/shared/lib/css";
-import { motion } from "framer-motion";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "accent";
@@ -29,7 +28,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       children,
       disabled,
-      as,
       ...props
     },
     ref
@@ -70,10 +68,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       : {};
 
     return (
-      <motion.button
+      <button
         ref={ref}
-        whileHover={{ scale: disabled ? 1 : 1.05 }}
-        whileTap={{ scale: disabled ? 1 : 0.95 }}
         className={cn(
           baseClasses,
           variants[variant],
@@ -84,7 +80,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         disabled={disabled || loading}
-        {...(props as any)}
+        {...props}
       >
         {loading && (
           <svg
@@ -117,7 +113,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {icon && iconPosition === "right" && !loading && (
           <span className="ml-2">{icon}</span>
         )}
-      </motion.button>
+      </button>
     );
   }
 );

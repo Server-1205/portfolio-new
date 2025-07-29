@@ -66,7 +66,7 @@ export default function NotFound() {
             className="space-y-6"
           >
             <div className="code-font text-accent text-lg">
-              // Ошибка: Страница не найдена
+              {"// Ошибка: Страница не найдена"}
             </div>
 
             <Heading
@@ -102,14 +102,13 @@ export default function NotFound() {
 
               {/* Code Content */}
               <div className="code-font text-sm space-y-2 text-left">
-                <div className="text-gray-400">// 404.js</div>
+                <div className="text-gray-400">{"// 404.js"}</div>
                 <div className="text-purple-400"></div>
                 <div className="ml-4 text-red-400">
                   throw new <span className="text-yellow-300">Error</span>(
                 </div>
                 <div className="ml-8 text-green-400">
-                  "<span className="text-yellow-300">Страница не найдена!</span>
-                  "
+                  <span className="text-yellow-300">Страница не найдена!</span>
                 </div>
                 <div className="ml-4 text-red-400">);</div>
                 <div className="text-purple-400">{"}"}</div>
@@ -127,26 +126,15 @@ export default function NotFound() {
             transition={{ duration: 0.8, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Button
-              as={Link}
-              href="/"
-              variant="primary"
-              size="lg"
-              className="group"
-            >
+            <Link href="/" className="group">
               <Icon name="fas fa-home" className="mr-2" />
               На главную
-            </Button>
+            </Link>
 
-            <Button
-              href="/portfolio"
-              variant="outline"
-              size="lg"
-              className="group"
-            >
+            <Link href="/portfolio" className="group">
               <Icon name="fas fa-folder-open" className="mr-2" />
               Проекты
-            </Button>
+            </Link>
 
             <Button
               onClick={() => window.history.back()}
