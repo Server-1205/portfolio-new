@@ -14,7 +14,6 @@ interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
 
 export const Heading = ({
   variant = "default",
-  size,
   weight = "bold",
   align = "left",
   animated = false,
@@ -34,16 +33,6 @@ export const Heading = ({
     outline:
       "text-transparent bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text stroke-2 stroke-white",
     glow: "text-white drop-shadow-[0_0_20px_rgba(99,102,241,0.6)]",
-  };
-
-  const sizes = {
-    xs: "text-xs",
-    sm: "text-sm md:text-base",
-    md: "text-base md:text-lg",
-    lg: "text-lg md:text-xl",
-    xl: "text-xl md:text-2xl",
-    "2xl": "text-2xl md:text-4xl",
-    "3xl": "text-3xl md:text-5xl lg:text-6xl",
   };
 
   const weights = {

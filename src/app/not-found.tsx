@@ -66,7 +66,7 @@ export default function NotFound() {
             className="space-y-6"
           >
             <div className="code-font text-accent text-lg">
-              // Ошибка: Страница не найдена
+              {"// Ошибка: Страница не найдена"}
             </div>
 
             <Heading
@@ -102,14 +102,13 @@ export default function NotFound() {
 
               {/* Code Content */}
               <div className="code-font text-sm space-y-2 text-left">
-                <div className="text-gray-400">// 404.js</div>
+                <div className="text-gray-400">{"// 404.js"}</div>
                 <div className="text-purple-400"></div>
                 <div className="ml-4 text-red-400">
                   throw new <span className="text-yellow-300">Error</span>(
                 </div>
                 <div className="ml-8 text-green-400">
-                  "<span className="text-yellow-300">Страница не найдена!</span>
-                  "
+                  <span className="text-yellow-300">Страница не найдена!</span>
                 </div>
                 <div className="ml-4 text-red-400">);</div>
                 <div className="text-purple-400">{"}"}</div>

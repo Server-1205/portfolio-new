@@ -12,7 +12,7 @@ export const SkillsSection = ({}: Props) => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 scroll-reveal">
           <div className="code-font text-accent mb-4">
-            // мой стек технологий
+            {"// мой стек технологий"}
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Технологии &
