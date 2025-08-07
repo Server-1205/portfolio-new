@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import { Button } from "@/shared/ui/kit/button";
-import { Heading } from "@/shared/ui/kit/card";
 import { Container } from "@/shared/ui/kit/container";
 import Icon from "@/shared/ui/kit/icon";
 import Section from "@/shared/ui/kit/section";
@@ -69,15 +68,12 @@ export default function NotFound() {
               {"// Ошибка: Страница не найдена"}
             </div>
 
-            <Heading
-              size="xl"
-              className="text-4xl md:text-6xl lg:text-7xl font-black"
-            >
+            <div className="text-4xl md:text-6xl lg:text-7xl font-black">
               <span className="block text-white">Упс!</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
                 Потерялись?
               </span>
-            </Heading>
+            </div>
 
             <p className="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto leading-relaxed">
               Похоже, что страница, которую вы ищете, не существует или была
