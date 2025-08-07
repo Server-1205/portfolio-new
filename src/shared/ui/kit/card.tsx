@@ -1,83 +1,92 @@
-﻿import React from "react";
+import * as React from "react";
+
 import { cn } from "@/shared/lib/css";
-import { motion } from "framer-motion";
 
-interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  variant?: "default" | "gradient" | "outline" | "glow";
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
-  weight?: "normal" | "medium" | "semibold" | "bold" | "black";
-  align?: "left" | "center" | "right";
-  animated?: boolean;
-  children: React.ReactNode;
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-}
-
-export const Heading = ({
-  variant = "default",
-  weight = "bold",
-  align = "left",
-  animated = false,
-  className,
-  children,
-  as: Component = "h2",
-  ...props
-}: HeadingProps) => {
-  // Default sizes based on heading level
-
-  const baseClasses = "leading-tight";
-
-  const variants = {
-    default: "text-white",
-    gradient:
-      "bg-gradient-to-r from-primary-400 via-accent-400 to-secondary-400 bg-clip-text text-transparent",
-    outline:
-      "text-transparent bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text stroke-2 stroke-white",
-    glow: "text-white drop-shadow-[0_0_20px_rgba(99,102,241,0.6)]",
-  };
-
-  const weights = {
-    normal: "font-normal",
-    medium: "font-medium",
-    semibold: "font-semibold",
-    bold: "font-bold",
-    black: "font-black",
-  };
-
-  const alignments = {
-    left: "text-left",
-    center: "text-center",
-    right: "text-right",
-  };
-
-  const content = (
-    <Component
+function Card({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card"
       className={cn(
-        baseClasses,
-        variants[variant],
-        weights[weight],
-        alignments[align],
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
         className
       )}
       {...props}
-    >
-      {children}
-    </Component>
+    />
   );
+}
 
-  if (animated) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        {content}
-      </motion.div>
-    );
-  }
+function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-header"
+      className={cn(
+        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
+        className
+      )}
+      {...props}
+    />
+  );
+}
 
-  return content;
+function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-title"
+      className={cn("leading-none font-semibold", className)}
+      {...props}
+    />
+  );
+}
+
+function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-description"
+      className={cn("text-muted-foreground text-sm", className)}
+      {...props}
+    />
+  );
+}
+
+function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-action"
+      className={cn(
+        "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-content"
+      className={cn("px-6", className)}
+      {...props}
+    />
+  );
+}
+
+function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn("flex items-center px-6 [.border-t]:pt-6", className)}
+      {...props}
+    />
+  );
+}
+
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
 };
-
-Heading.displayName = "Heading";

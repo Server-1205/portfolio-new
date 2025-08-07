@@ -1,5 +1,4 @@
-﻿"use client";
-import { Badge } from "@/shared/ui/kit/badge";
+﻿import { Badge } from "@/shared/ui/kit/badge";
 import { PortfolioCode } from "./portfolio-code";
 import Link from "next/link";
 import React from "react";
@@ -10,6 +9,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { FaReact } from "react-icons/fa";
 import { FaJs } from "react-icons/fa";
 import { FaNodeJs } from "react-icons/fa";
+import { Button } from "@/shared/ui/kit/button";
 
 interface HeroProps {
   title: string;
@@ -51,18 +51,14 @@ export const Hero = ({
                   {description}
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Badge
-                    variant="glass"
-                    pulse={true}
-                    className="text-secondary"
-                  >
+                  <Badge variant="outline" className="text-secondary">
                     JavaScript/TypeScript
                   </Badge>
-                  <Badge variant="glass" pulse={true} className="text-primary">
+                  <Badge variant="outline" className="text-primary">
                     React & Next.js
                   </Badge>
 
-                  <Badge variant="glass" pulse={true} className="text-accent">
+                  <Badge variant="outline" className="text-accent">
                     Node.js & Express
                   </Badge>
                 </div>
@@ -70,19 +66,16 @@ export const Hero = ({
             </div>
 
             <div className="flex flex-wrap gap-6 animate-fade-in-up">
-              <Link
-                href="/portfolio"
-                className="group relative bg-gradient-to-r from-primary to-accent px-8 py-4 rounded-full text-white font-semibold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25"
-              >
-                <span className="relative z-10">Посмотреть проекты</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
-              <Link
-                href="/contact"
-                className="group glass-effect px-8 py-4 rounded-full text-white font-semibold border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105"
-              >
-                Связаться со мной
-              </Link>
+              <Button asChild variant="outline" className="relative bg-primary">
+                <Link href="/portfolio">
+                  <span className="relative z-10">Посмотреть проекты</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </Link>
+              </Button>
+
+              <Button asChild className="bg-accent">
+                <Link href="/contact">Связаться со мной</Link>
+              </Button>
             </div>
             {/* Иконки соц сетей */}
             <div className="flex space-x-6 animate-fade-in-up">

@@ -1,7 +1,7 @@
 import { Hero } from "@/features/hero";
-import { RecentPosts } from "@/features/recent-posts";
-import { RecentProjects } from "@/features/recent-projects";
-import { SkillsSection } from "@/features/skills-section";
+import { RecentPosts } from "@/features/post/recent-posts";
+import { RecentProjects } from "@/features/project/recent-projects";
+import { SkillsSection } from "@/features/skill/skills-section";
 
 // const getProjects = async () => {
 //   try {
